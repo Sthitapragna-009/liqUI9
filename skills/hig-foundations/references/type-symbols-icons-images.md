@@ -87,7 +87,7 @@ Thousands of symbols that align with San Francisco at every weight and size. Lic
 - **Standard symbols for common actions**: cut `scissors`, copy `document.on.document`, paste `document.on.clipboard`, done `checkmark`, cancel/close `xmark`, delete `trash`, undo `arrow.uturn.backward`, redo `arrow.uturn.forward`, compose `square.and.pencil`, duplicate `plus.square.on.square`, rename `pencil`, move `folder`, attach `paperclip`, add `plus`, more `ellipsis`, select `checkmark.circle`, search `magnifyingglass`, find `text.page.badge.magnifyingglass`, filter `line.3.horizontal.decrease`, share/export `square.and.arrow.up`, print `printer`, account `person.crop.circle`, like/dislike `hand.thumbsup`/`hand.thumbsdown`, bring to front `square.3.layers.3d.top.filled`, archive `archivebox`, calendar `calendar`, alarm `alarm`, text formatting (`bold`, `italic`, `underline`, `text.alignleft` …).
 - **macOS document icons**: background fill and/or centre image (half the canvas, ~10% margin, ~80% fill) plus a short term instead of an obscure extension; keep the top-right (folded corner) clear; simplify the 16 px size.
 
-When building for the web, LiqUI's kit uses Lucide-style outline icons as a stand-in, because SF Symbols are licensed only for Apple platforms.
+When building for the web, liqUI9's kit uses Lucide-style outline icons as a stand-in, because SF Symbols are licensed only for Apple platforms.
 
 ## App icons — [HIG](https://developer.apple.com/design/human-interface-guidelines/app-icons)
 

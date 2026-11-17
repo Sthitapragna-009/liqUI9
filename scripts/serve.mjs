@@ -1,4 +1,4 @@
-// Tiny static server for the LiqUI demo (ES modules need http://, not file://).
+// Tiny static server for the liqUI9 demo (ES modules need http://, not file://).
 // Usage: node scripts/serve.mjs [port]   then open http://localhost:4321/demo/
 import http from "node:http";
 import fs from "node:fs";
@@ -19,4 +19,4 @@ http.createServer((req, res) => {
     if (err) { res.writeHead(404).end("Not found"); return; }
     res.writeHead(200, { "content-type": types[path.extname(file)] || "application/octet-stream" }).end(data);
   });
-}).listen(port, () => console.log(`LiqUI demo: http://localhost:${port}/demo/`));
+}).listen(port, () => console.log(`liqUI9 demo: http://localhost:${port}/demo/`));

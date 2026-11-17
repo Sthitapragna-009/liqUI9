@@ -1,4 +1,4 @@
-/* LiqUI Screens — the interactions from the "Designing UI components with Liquid Glass" piece, live.
+/* liqUI9 Screens — the interactions from the "Designing UI components with Liquid Glass" piece, live.
    Cards are the content layer (solid); glass appears only on controls, loupes, labels and bars. MIT, (c) 2026 KSP. */
 
 .scr-bar { position: sticky; top: 64px; z-index: 12; display: flex; align-items: center; gap: 12px; margin: 0 0 18px; }

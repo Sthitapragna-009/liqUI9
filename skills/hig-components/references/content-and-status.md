@@ -63,7 +63,7 @@ Apple's Move/Exercise/Stand rings. **Third parties may display them only through
 - No notifications duplicating Activity's; no rings in notifications, decorations, backgrounds, branding, app icons or marketing.
 - iOS shows one Move ring without a paired Watch, three with one.
 
-**For LiqUI's web kit this means**: radial progress gauges must not look like three concentric Move/Exercise/Stand rings. Use one open-arc gauge, different colours, and labels.
+**For liqUI9's web kit this means**: radial progress gauges must not look like three concentric Move/Exercise/Stand rings. Use one open-arc gauge, different colours, and labels.
 
 ## Gauges — [HIG](https://developer.apple.com/design/human-interface-guidelines/gauges)
 - A value within a range on a circular or linear path. *Standard* style shows an indicator at the value; *capacity* style fills up to it; *accessory* variants mimic watch complications (iOS Lock Screen widgets).

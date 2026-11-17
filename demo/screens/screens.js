@@ -1,4 +1,4 @@
-// LiqUI Screens: a switcher across the seven screens of the Liquid Glass motion piece. MIT, (c) 2026 KSP.
+// liqUI9 Screens: a switcher across the seven screens of the Liquid Glass motion piece. MIT, (c) 2026 KSP.
 import { glass, segmented, segHTML, director, $ } from "./lib.js";
 import money from "./money.js";
 import buttons from "./buttons.js";

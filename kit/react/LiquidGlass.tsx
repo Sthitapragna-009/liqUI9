@@ -1,5 +1,5 @@
 /*!
- * LiqUI React wrapper — MIT License, (c) 2026 KSP.
+ * liqUI9 React wrapper — MIT License, (c) 2026 KSP.
  * Thin component around kit/liqui-glass.js. Works in React apps and Remotion compositions
  * (Remotion renders in headless Chromium, where the SVG refraction is supported).
  * Remember to import kit/liqui.css once in your app.

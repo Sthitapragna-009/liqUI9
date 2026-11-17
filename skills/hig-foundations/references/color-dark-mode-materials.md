@@ -100,7 +100,7 @@ Two families:
 - **visionOS**: windows use a fixed system *glass* that adapts to the room's light. Prefer translucency to opaque fills. Thin material draws attention to interactive items; regular separates sections; thick makes a dark element distinct on top of regular. Vibrancy levels: label, secondary label (footnotes), tertiary (inactive only).
 - **watchOS**: keep the default material backgrounds on full-screen modal sheets — they orient people.
 
-## How this maps to LiqUI
+## How this maps to liqUI9
 
 - The web recipe in `liquid-glass-web` implements Regular, Clear (+35% dim) and Tinted, a monochrome label rule on glass, and the content-layer prohibition.
 - `hig-review` flags: glass on content cards, tinted glass on more than one control per view, colour as the only signal, missing dark/high-contrast values, contrast under 4.5:1.

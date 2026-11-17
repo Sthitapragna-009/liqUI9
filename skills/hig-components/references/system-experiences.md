@@ -79,7 +79,7 @@ Keep the status bar legible with a scroll edge effect behind it and never imply 
 - **Tinted mode**: never colour-only meaning; supply tinted image versions; people may prefer tinted. Lines ≥2 pt. Static placeholder images per complication.
 - Families: circular (incl. bezel text up to ~180°, and extra-large for X-Large faces), corner, inline (utilitarian small and large), rectangular (rich charts; can appear in the Smart Stack — meaningful background, relevance intents), plus legacy templates. Default type: SF Compact Rounded, Medium (Semibold for corners).
 
-**LiqUI note**: LiqUI's "radial gauge" web components follow the *open* gauge style (gap at the bottom, value centred) — distinct from Activity rings.
+**liqUI9 note**: liqUI9's "radial gauge" web components follow the *open* gauge style (gap at the bottom, value centred) — distinct from Activity rings.
 
 ## Watch faces — [HIG](https://developer.apple.com/design/human-interface-guidelines/watch-faces)
 Share curated faces featuring your complications (prompts app install); show previews (bezel art from Apple Design Resources); offer versions for older devices and fall back gracefully on incompatible faces.

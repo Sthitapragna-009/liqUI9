@@ -1,6 +1,6 @@
 # Technologies (part 1: AirPlay → CareKit)
 
-Paraphrased from Apple's HIG *Technologies* section. Synced 2026-11-17. Many technology pages carry **brand-asset rules**: Apple's marks and buttons (AirPlay icon, Apple Pay button and mark, AR glyph and badges, App Clip Codes) must come from Apple's official resources and APIs, unaltered. LiqUI never redraws them.
+Paraphrased from Apple's HIG *Technologies* section. Synced 2026-11-17. Many technology pages carry **brand-asset rules**: Apple's marks and buttons (AirPlay icon, Apple Pay button and mark, AR glyph and badges, App Clip Codes) must come from Apple's official resources and APIs, unaltered. liqUI9 never redraws them.
 
 ## AirPlay — [HIG](https://developer.apple.com/design/human-interface-guidelines/airplay)
 - System player first; HLS playlists with the full resolution range (720p looks poor on a 4K TV); stream only content people expect (not background loops); support streaming *and* mirroring; support remote control events; keep playing in the background and when locked (no automatic mirroring); don't interrupt other apps' playback unless starting immersive content; keep the app usable during playback without starting other videos.

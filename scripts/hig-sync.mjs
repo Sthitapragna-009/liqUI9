@@ -1,5 +1,5 @@
 // hig-sync: download Apple HIG pages to a git-ignored local cache and report what changed
-// since the LiqUI digests were last written. Never commit the cache: Apple owns that text.
+// since the liqUI9 digests were last written. Never commit the cache: Apple owns that text.
 // Usage: node scripts/hig-sync.mjs            -> report added / removed / changed pages
 //        node scripts/hig-sync.mjs --update   -> also rewrite scripts/hig-manifest.json
 import fs from "node:fs";

@@ -9,7 +9,7 @@ A bordered or filled group of related content, optionally titled.
 - Title only if it clarifies: a short phrase in sentence case, no punctuation (except a trailing colon in macOS settings panes).
 - iOS/iPadOS fill boxes with secondary/tertiary background colours; macOS puts the title above. Not on tvOS or watchOS.
 
-*LiqUI note*: boxes and cards live in the **content layer** — standard materials or solid fills, never Liquid Glass.
+*liqUI9 note*: boxes and cards live in the **content layer** — standard materials or solid fills, never Liquid Glass.
 
 ## Collections — [HIG](https://developer.apple.com/design/human-interface-guidelines/collections)
 Ordered, visual (usually image-based) content in rows or grids.

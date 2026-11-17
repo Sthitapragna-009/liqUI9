@@ -4,7 +4,7 @@
 
 **[See the live demo →](https://sthitapragna-009.github.io/liqUI9/demo/)** (real refraction in Chrome, Edge and Arc; Safari and Firefox show a frosted fallback)
 
-LiqUI is a Claude Code plugin that gives Claude a working knowledge of every page of Apple's Human Interface Guidelines (158 pages, paraphrased and linked), plus a real web implementation of Liquid Glass — refraction, specular rim, liquid motion — that holds up next to the system, not the usual frosted rectangle with a border.
+liqUI9 is a Claude Code plugin that gives Claude a working knowledge of every page of Apple's Human Interface Guidelines (158 pages, paraphrased and linked), plus a real web implementation of Liquid Glass — refraction, specular rim, liquid motion — that holds up next to the system, not the usual frosted rectangle with a border.
 
 Use it to design screens, spec components, build web or Remotion prototypes, set up Figma glass layers, hand off to SwiftUI, and audit work against the HIG.
 
@@ -68,7 +68,7 @@ import { LiquidGlass } from "./kit/react/LiquidGlass";
 <LiquidGlass as="button" variant="tinted" interactive className="btn btn--tinted">Pay ₹2,348</LiquidGlass>
 ```
 
-## The rules LiqUI enforces
+## The rules liqUI9 enforces
 
 1. Glass is for the functional layer — bars, controls, navigation. Content stays solid.
 2. Glass needs something behind it to bend.
@@ -94,4 +94,4 @@ Created by **[KSP](https://kspportfolio-one.vercel.app)**. The glass engine grew
 - Code (`kit/`, `demo/`, `scripts/`, code samples): [MIT](LICENSE)
 - Written guidance (skills, references, docs): [CC BY 4.0](LICENSE-docs)
 
-LiqUI is an independent community project, not made or endorsed by Apple. Guidance paraphrases and links to [Apple's Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/); read Apple's pages for authoritative wording. See [NOTICE.md](NOTICE.md) for trademarks and fonts.
+liqUI9 is an independent community project, not made or endorsed by Apple. Guidance paraphrases and links to [Apple's Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/); read Apple's pages for authoritative wording. See [NOTICE.md](NOTICE.md) for trademarks and fonts.

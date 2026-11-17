@@ -1,4 +1,4 @@
-// Shared helpers for the LiqUI Screens page. MIT, (c) 2026 KSP.
+// Shared helpers for the liqUI9 Screens page. MIT, (c) 2026 KSP.
 import { glass, spring, liquidStretch } from "../../kit/liqui-glass.js";
 export { glass, spring, liquidStretch };
 

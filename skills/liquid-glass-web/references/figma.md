@@ -12,7 +12,7 @@ Apple publishes official iOS, iPadOS, macOS, watchOS and visionOS design kits (F
 
 ## Glass layer recipe (when the file's Figma version has a native glass effect)
 
-Recent versions of Figma include a **Glass** effect with controls along the lines of light angle and intensity, refraction, depth, dispersion and frost. Names and ranges can change between Figma releases — check yours. Starting points that match LiqUI's web kit:
+Recent versions of Figma include a **Glass** effect with controls along the lines of light angle and intensity, refraction, depth, dispersion and frost. Names and ranges can change between Figma releases — check yours. Starting points that match liqUI9's web kit:
 
 | Variant | Refraction | Depth | Dispersion | Frost | Light | Fill on top |
 |---|---|---|---|---|---|---|

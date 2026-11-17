@@ -49,7 +49,7 @@ A row of dots for pages in a flat, ordered list.
 - *iOS/iPadOS*: current dot highlighted; edge dots shrink when overflowing; tap sides for next/previous; scrub to move quickly (no animated transitions while scrubbing). Backgrounds: automatic (on interaction), prominent (always — only when it's the primary navigation), minimal (never — then don't allow scrubbing).
 - *tvOS*: full-screen peer pages. *visionOS*: display-only. *watchOS*: bottom for horizontal paging, beside the Digital Crown for vertical tab views; prefer vertical pages of one screen height each, variable-height pages last.
 
-*LiqUI note*: the demo's glass "bead" that stretches between dots is an expressive interpretation of a page control's current-page indicator; keep it on the functional layer and respect reduced motion.
+*liqUI9 note*: the demo's glass "bead" that stretches between dots is an expressive interpretation of a page control's current-page indicator; keep it on the functional layer and respect reduced motion.
 
 ## Scroll views — [HIG](https://developer.apple.com/design/human-interface-guidelines/scroll-views)
 - Standard gestures, shortcuts and elastic bounce; show that content continues (partially visible items); no same-axis nested scroll views (cross-axis is fine).

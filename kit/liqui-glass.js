@@ -1,5 +1,5 @@
 /*!
- * LiqUI glass engine — MIT License, (c) 2026 KSP.
+ * liqUI9 glass engine — MIT License, (c) 2026 KSP.
  * Web approximation of Apple's Liquid Glass. The lens technique (convex-bevel displacement
  * map + per-channel displacement for dispersion + specular rim / caustic / sheen layers)
  * was first built by KSP for a Remotion motion piece and is generalised here.

@@ -1,11 +1,11 @@
-# Contributing to LiqUI
+# Contributing to liqUI9
 
 Thanks for helping designers build better Apple-style interfaces.
 
 ## Ground rules
 
 1. **Paraphrase, never paste.** Apple's guideline text is copyrighted. Write rules in your own words, keep Apple's published numbers (sizes, values) where useful, and link the source page. Short quotes are not needed and not accepted.
-2. **Every rule needs a source.** Link the Apple page (or WWDC session) it comes from. Our own recommendations (like kit parameter values) must say they're LiqUI's, not Apple's.
+2. **Every rule needs a source.** Link the Apple page (or WWDC session) it comes from. Our own recommendations (like kit parameter values) must say they're liqUI9's, not Apple's.
 3. **No Apple assets.** Don't add SF fonts, SF Symbols exports, Apple logos, Apple Pay or Sign in with Apple artwork, device frames from Apple's kits, or screenshots of Apple apps.
 4. **Accessibility is not optional.** Kit changes must keep Reduce Transparency, Increase Contrast and Reduce Motion paths working and keep 44 pt targets.
 5. **Verify glass claims in a browser.** If you change the engine, check the demo in a Chromium browser *and* in Safari or Firefox (fallback), and say which you tested.

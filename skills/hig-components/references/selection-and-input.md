@@ -10,7 +10,7 @@ Two or more equal-width segments acting as buttons: single choice, multiple choi
 - Text **or** images, not both; noun labels in title case; no introductory text needed for text segments.
 - *iOS/iPadOS*: switch closely related subviews (Calendar's Event / Reminder); separate app sections → tab bar. *macOS*: intro text or per-segment labels/tooltips for icon segments; main-window view switching → tab view; spring-loading. *tvOS*: segments select on focus — keep other focusable items away; filtering screens → split view. *visionOS*: icon segments show tooltips on gaze. Not on watchOS.
 
-*Liquid Glass*: the selected-segment indicator is the "transient interactive element" that becomes glass while dragged; the LiqUI kit's segmented control animates a glass bead between segments.
+*Liquid Glass*: the selected-segment indicator is the "transient interactive element" that becomes glass while dragged; the liqUI9 kit's segmented control animates a glass bead between segments.
 
 ## Sliders — [HIG](https://developer.apple.com/design/human-interface-guidelines/sliders)
 A track with a draggable **thumb**; the min-side fills with colour; optional min/max icons.
