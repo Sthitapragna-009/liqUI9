@@ -1,4 +1,4 @@
-# LiqUI
+# liqUI9 — Exploring Apple's Human Interface Guidelines through Liquid Glass.
 
 **Liquid Glass and Apple's Human Interface Guidelines, as Claude skills for designers.**
 
