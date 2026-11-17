@@ -2,7 +2,7 @@
 
 **Liquid Glass and Apple's Human Interface Guidelines, as Claude skills for designers.**
 
-**[See the live demo →](https://sthitapragna-009.github.io/liqui-hig/demo/)** (real refraction in Chrome, Edge and Arc; Safari and Firefox show a frosted fallback)
+**[See the live demo →](https://sthitapragna-009.github.io/liqUI9/demo/)** (real refraction in Chrome, Edge and Arc; Safari and Firefox show a frosted fallback)
 
 LiqUI is a Claude Code plugin that gives Claude a working knowledge of every page of Apple's Human Interface Guidelines (158 pages, paraphrased and linked), plus a real web implementation of Liquid Glass — refraction, specular rim, liquid motion — that holds up next to the system, not the usual frosted rectangle with a border.
 
@@ -23,13 +23,14 @@ Plus a small framework-free kit:
 - `kit/liqui.css` — HIG system-colour tokens (light, dark), type scale, the glass layer stack, accessibility fallbacks, buttons, segmented control, slider, toggle, tab bar, toolbar, scroll edge effect
 - `kit/react/LiquidGlass.tsx` — React/Remotion wrapper
 - `demo/index.html` — a live gallery of everything
+- `demo/screens/` — seven interactive screens (Money, Buttons, Commerce, Health, Home, Glanceable, Workspace) that recreate every interaction from the *Designing UI components with Liquid Glass* motion piece, with a Watch mode that plays each one through
 
 ## Install
 
 ### Claude Code
 
 ```bash
-/plugin marketplace add Sthitapragna-009/liqui-hig
+/plugin marketplace add Sthitapragna-009/liqUI9
 ```
 
 ```bash
@@ -48,7 +49,7 @@ Zip any folder under `skills/` (for example `skills/liquid-glass-web`) and uploa
 node scripts/serve.mjs
 ```
 
-Open <http://localhost:4321/demo/>, or use the hosted copy at <https://sthitapragna-009.github.io/liqui-hig/demo/>. Real refraction renders in Chromium-based browsers (Chrome, Edge, Arc); Safari and Firefox show the frosted fallback. The page says which one you're seeing.
+Open <http://localhost:4321/demo/>, or use the hosted copy at <https://sthitapragna-009.github.io/liqUI9/demo/>. Real refraction renders in Chromium-based browsers (Chrome, Edge, Arc); Safari and Firefox show the frosted fallback. The page says which one you're seeing.
 
 ## Use the kit
 
