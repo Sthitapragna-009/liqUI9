@@ -1,5 +1,6 @@
 {
   "name": "liqui",
+  "description": "LiqUI: Claude skills for designing with Apple's Human Interface Guidelines and Liquid Glass, plus a web glass kit.",
   "owner": {
     "name": "KSP",
     "url": "https://kspportfolio-one.vercel.app"
