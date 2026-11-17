@@ -1,0 +1,6 @@
+# Local copy of Apple's guideline pages made by scripts/hig-sync.mjs. Never commit.
+.hig-cache/
+node_modules/
+.DS_Store
+Thumbs.db
+*.log

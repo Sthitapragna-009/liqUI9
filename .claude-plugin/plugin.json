@@ -1,0 +1,13 @@
+{
+  "name": "liqui-hig",
+  "version": "0.1.0",
+  "description": "LiqUI: Liquid Glass and Apple Human Interface Guidelines skills for designers. Paraphrased digests of every HIG page, a working web Liquid Glass recipe, Figma and SwiftUI guidance, and a HIG review workflow.",
+  "author": {
+    "name": "KSP",
+    "url": "https://kspportfolio-one.vercel.app"
+  },
+  "homepage": "https://github.com/Sthitapragna-009/liqui-hig",
+  "repository": "https://github.com/Sthitapragna-009/liqui-hig",
+  "license": "MIT AND CC-BY-4.0",
+  "keywords": ["design", "liquid-glass", "apple", "hig", "human-interface-guidelines", "ui", "ux", "figma", "swiftui", "glassmorphism"]
+}

@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LiqUI Demo</title>
+<meta name="description" content="Liquid Glass components built to Apple's Human Interface Guidelines, for the web.">
+<link rel="stylesheet" href="../kit/liqui.css">
+<style>
+  body { margin: 0; background: var(--bg); color: var(--label); font: 400 var(--t-body)/1.47 var(--font); -webkit-font-smoothing: antialiased; }
+  /* Content layer backdrop: near-black with two quiet blue glows (glass needs something to bend). */
+  .stage { position: fixed; inset: 0; z-index: -1; background:
+      radial-gradient(60vmax 50vmax at 88% -10%, rgb(0 47 167 / 0.55), transparent 60%),
+      radial-gradient(50vmax 40vmax at 8% 105%, rgb(0 47 167 / 0.35), transparent 60%), var(--bg); }
+  :root[data-theme="light"] .stage { background:
+      radial-gradient(60vmax 50vmax at 88% -10%, rgb(0 136 255 / 0.22), transparent 60%),
+      radial-gradient(50vmax 40vmax at 8% 105%, rgb(0 136 255 / 0.15), transparent 60%), var(--bg-2); }
+  main { max-width: 1080px; margin: 0 auto; padding: 96px 16px 120px; }
+  header.top { position: fixed; top: 12px; left: 0; right: 0; z-index: 20; display: flex; justify-content: center; padding: 0 16px; }
+  h1 { font: 700 clamp(56px, 11vw, 132px)/0.95 var(--font-display); letter-spacing: -0.035em; margin: 0; }
+  h2 { font: 700 var(--t-title1)/1.15 var(--font-display); letter-spacing: -0.01em; margin: 0 0 6px; }
+  .lede { color: var(--label-2); max-width: 46ch; margin: 12px 0 0; font-size: var(--t-title3); line-height: 1.4; }
+  section { margin-top: 88px; }
+  .sub { color: var(--label-2); margin: 0 0 24px; max-width: 62ch; }
+  .row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+  .grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+  .note { font-size: var(--t-footnote); color: var(--label-2); }
+  .pill { font: 600 var(--t-caption1)/1 var(--font); padding: 10px 14px; }
+  .hero { position: relative; padding: 40px 0 20px; touch-action: none; overflow-x: clip; overflow-y: visible; }
+  .lens { position: absolute; width: 190px; height: 120px; left: 46%; top: 10px; border-radius: 60px; cursor: grab; z-index: 3; transition: none; }
+  .lens:active { cursor: grabbing; }
+  /* Material bench: structured content under each glass panel. */
+  .bench { position: relative; height: 230px; border-radius: var(--radius-lg); overflow: hidden; display: grid; place-items: center;
+    background: repeating-linear-gradient(115deg, #ff5a36 0 22px, #ffcc00 22px 44px, #2b6bff 44px 66px, #0d0d10 66px 88px); }
+  .bench.photo { background: radial-gradient(circle at 30% 30%, #ffd59e, #ff7a59 30%, #6b2fb3 60%, #0b1a3a); }
+  .bench .lg { width: 70%; height: 92px; display: grid; place-items: center; font: 600 var(--t-headline)/1.2 var(--font); text-align: center; }
+  .bench small { display: block; font-weight: 500; font-size: var(--t-caption1); opacity: 0.8; }
+  .bench-label { margin: 10px 2px 0; }
+  .tone { position: absolute; inset: 0; display: grid; place-items: center; font: 800 72px/1 var(--font-display); color: rgb(255 255 255 / 0.9); letter-spacing: -0.03em; }
+  /* Chart */
+  .chartcard { position: relative; padding: 20px 20px 12px; }
+  .chartcard svg.chart { display: block; width: 100%; height: 220px; overflow: visible; }
+  .scrub { position: absolute; width: 64px; height: 64px; border-radius: 50%; pointer-events: none; opacity: 0; transition: opacity 200ms; }
+  .scrub-label { position: absolute; padding: 8px 12px; font: 600 var(--t-footnote)/1 var(--font-rounded); pointer-events: none; opacity: 0; transition: opacity 200ms; white-space: nowrap; }
+  .scrub, .scrub-label { top: 0; left: 0; }
+  .chartcard.is-scrubbing .scrub, .chartcard.is-scrubbing .scrub-label { opacity: 1; }
+  /* Imagery behind the button rows so the glass has something to bend. */
+  .backdrop { padding: 28px; border-radius: var(--radius-xl); background:
+      radial-gradient(120px 120px at 18% 30%, rgb(255 200 120 / 0.9), transparent 70%),
+      radial-gradient(160px 120px at 62% 70%, rgb(80 200 255 / 0.75), transparent 70%),
+      repeating-linear-gradient(90deg, rgb(255 255 255 / 0.07) 0 2px, transparent 2px 26px),
+      linear-gradient(135deg, #142a5c, #4a2479 45%, #a2394f); }
+  .backdrop .row + .row { margin-top: 18px; }
+  .backdrop .btn--plain, .backdrop .btn--gray:not(.btn--destructive) { color: #fff; }
+  .big { font: 700 var(--t-large-title)/1 var(--font-rounded); letter-spacing: -0.01em; }
+  .up { color: var(--green); font-weight: 600; }
+  /* Phone frames */
+  .phones { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; justify-items: center; }
+  .phone { position: relative; width: 300px; height: 600px; border-radius: 48px; overflow: hidden; background: var(--bg);
+    box-shadow: 0 0 0 10px #1a1a1c, 0 30px 60px -20px rgb(0 0 0 / 0.6); }
+  :root[data-theme="light"] .phone { box-shadow: 0 0 0 10px #d9d9de, 0 30px 60px -20px rgb(0 0 0 / 0.25); }
+  .phone .scroll { position: absolute; inset: 0; overflow-y: auto; padding: 0 14px 120px; scrollbar-width: none; }
+  .phone .scroll::-webkit-scrollbar { display: none; }
+  .phone h3 { font: 700 var(--t-large-title)/1.1 var(--font-display); margin: 70px 0 14px; letter-spacing: -0.01em; }
+  .tile { height: 150px; border-radius: 22px; margin-bottom: 12px; padding: 14px; display: flex; align-items: flex-end; color: #fff; font: 600 var(--t-headline)/1.2 var(--font); }
+  .tile:nth-child(3n+1) { background: linear-gradient(135deg, #ff6a3d, #b4206e); }
+  .tile:nth-child(3n+2) { background: linear-gradient(135deg, #1e9bff, #4b2bd1); }
+  .tile:nth-child(3n) { background: linear-gradient(135deg, #10c38a, #0a5a7a); }
+  .row-item { display: flex; justify-content: space-between; padding: 14px 4px; border-bottom: 0.5px solid var(--separator); font-size: var(--t-subhead); }
+  .phone .tabbar { position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); transition: transform 450ms var(--spring); }
+  .phone .tabbar.is-min { transform: translateX(-50%) scale(0.86); }
+  .phone .tabbar.is-min button span { display: none; }
+  .phone .topbar { position: absolute; top: 14px; left: 14px; right: 14px; display: flex; justify-content: space-between; z-index: 6; }
+  .badge { display: inline-block; font: 700 var(--t-caption2)/1 var(--font); letter-spacing: 0.04em; text-transform: uppercase; padding: 6px 9px; border-radius: 999px; }
+  .badge.do { background: color-mix(in srgb, var(--green) 22%, transparent); color: var(--green); }
+  .badge.dont { background: color-mix(in srgb, var(--red) 22%, transparent); color: var(--red); }
+  .caption { text-align: center; margin-top: 14px; max-width: 300px; }
+  footer { margin-top: 96px; padding-top: 24px; border-top: 0.5px solid var(--separator); font-size: var(--t-footnote); color: var(--label-2); }
+  footer a { color: var(--accent); }
+  @media (max-width: 520px) { .lens { width: 140px; height: 90px; } }
+</style>
+</head>
+<body>
+<div class="stage" aria-hidden="true"></div>
+
+<header class="top">
+  <nav class="toolbar" aria-label="Demo controls">
+    <div class="toolbar__group" data-glass="regular">
+      <span class="pill" id="engine">Checking renderer…</span>
+    </div>
+    <div>
+      <div class="seg" id="theme" role="group" aria-label="Appearance">
+        <button aria-pressed="true" data-v="dark">Dark</button>
+        <button aria-pressed="false" data-v="light">Light</button>
+        <span class="seg__thumb" data-glass="clear"></span>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <div class="hero" id="hero">
+    <h1>LiqUI</h1>
+    <p class="lede">Liquid Glass and Apple's Human Interface Guidelines, for designers building on the web, in Figma and in SwiftUI. Drag the lens across the title.</p>
+    <div class="lens" id="lens" data-glass="clear" role="img" aria-label="Draggable glass lens"></div>
+  </div>
+
+  <section aria-labelledby="mat">
+    <h2 id="mat">The material</h2>
+    <p class="sub">Glass bends what's behind it, catches light on its rim and adapts to the content. Regular is the default; Clear sits over rich media with a dimming layer; Tinted is reserved for the one primary action.</p>
+    <div class="grid3">
+      <div><div class="bench"><div data-glass="regular"><span>Regular<small>bars, buttons, menus</small></span></div></div><p class="bench-label note">Frosted and refracted; labels stay monochrome.</p></div>
+      <div><div class="bench photo"><div id="clearPanel" data-glass="clear"><span>Clear<small>over photos and video</small></span></div></div><p class="bench-label note">Dim behind clear glass: <span id="dimVal">35%</span></p>
+        <div class="slider" id="dimSlider" style="--p:35%"><div class="slider__track"><div class="slider__fill"></div></div><div class="slider__thumb" data-glass="clear"><span class="slider__cap"></span></div></div></div>
+      <div><div class="bench"><div data-glass="tinted"><span>Tinted<small>the primary action only</small></span></div></div><p class="bench-label note">Colour the glass body, not the label.</p></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="btn">
+    <h2 id="btn">Buttons</h2>
+    <p class="sub">Four styles signal hierarchy; sizes stay consistent within a set; roles change colour, never size. Press and hold to feel the squish.</p>
+    <div class="backdrop">
+    <div class="row">
+      <button class="btn btn--tinted btn--lg" data-glass="tinted" data-interactive>Continue</button>
+      <button class="btn btn--glass btn--lg" data-glass="regular" data-interactive>Share</button>
+      <button class="btn btn--gray btn--lg">Edit</button>
+      <button class="btn btn--plain btn--lg">Learn More</button>
+    </div>
+    <div class="row">
+      <button class="btn btn--glass btn--sm" data-glass="regular" data-interactive>Small</button>
+      <button class="btn btn--glass" data-glass="regular" data-interactive>Medium</button>
+      <button class="btn btn--glass btn--lg" data-glass="regular" data-interactive>Large</button>
+      <button class="btn btn--glass btn--icon" data-glass="regular" data-interactive aria-label="Add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+      <button class="btn btn--glass btn--icon btn--lg" data-glass="regular" data-interactive aria-label="Favorite" aria-pressed="false" id="fav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button>
+    </div>
+    <div class="row">
+      <button class="btn btn--tinted btn--destructive" data-glass="tinted" data-interactive>Delete Draft</button>
+      <button class="btn btn--gray btn--destructive">Remove</button>
+      <button class="btn btn--glass" data-glass="regular" disabled>Unavailable</button>
+    </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="ctl">
+    <h2 id="ctl">Controls</h2>
+    <p class="sub">Content-layer controls stay solid at rest. The moving part becomes glass while you interact: the segmented control's thumb glides and stretches, the slider thumb turns to glass while dragged.</p>
+    <div class="row" style="gap:28px">
+      <div class="seg" id="period" role="group" aria-label="Chart period">
+        <button aria-pressed="false" data-v="1D">1D</button><button aria-pressed="true" data-v="1W">1W</button><button aria-pressed="false" data-v="1M">1M</button><button aria-pressed="false" data-v="1Y">1Y</button>
+        <span class="seg__thumb" data-glass="clear"></span>
+      </div>
+      <div style="width:260px"><div class="slider" id="vol" style="--p:60%"><div class="slider__track"><div class="slider__fill"></div></div><div class="slider__thumb" data-glass="clear"><span class="slider__cap"></span></div></div></div>
+      <button class="toggle" role="switch" aria-checked="true" aria-label="Notifications" id="tg"><span class="toggle__knob"></span></button>
+    </div>
+  </section>
+
+  <section aria-labelledby="dat">
+    <h2 id="dat">Data under glass</h2>
+    <p class="sub">The chart lives in the content layer; a clear lens follows your pointer and magnifies the line, with the value on a glass label. The card itself stays solid.</p>
+    <div class="card chartcard" id="chart">
+      <div class="row" style="justify-content:space-between"><div><div class="note">Index fund</div><div class="big" id="price">₹4,58,021</div><div class="up" id="chg">+2.4% this week</div></div></div>
+      <svg class="chart" viewBox="0 0 600 220" preserveAspectRatio="none" aria-label="Line chart of the index fund over the selected period" role="img">
+        <defs><linearGradient id="area" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="var(--green)" stop-opacity=".35"/><stop offset="1" stop-color="var(--green)" stop-opacity="0"/></linearGradient></defs>
+        <g stroke="var(--separator)" stroke-width="0.5"><line x1="0" x2="600" y1="55" y2="55"/><line x1="0" x2="600" y1="110" y2="110"/><line x1="0" x2="600" y1="165" y2="165"/></g>
+        <path id="areaPath" fill="url(#area)"/><path id="linePath" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+      </svg>
+      <div class="scrub" id="scrub" data-glass="clear"></div>
+      <div class="scrub-label" id="scrubLabel" data-glass="regular">—</div>
+    </div>
+  </section>
+
+  <section aria-labelledby="bars">
+    <h2 id="bars">Bars, and where glass doesn't go</h2>
+    <p class="sub">Scroll the phones. A floating glass tab bar minimises as you scroll, and a scroll edge effect separates the top controls from content. Glass stays on the functional layer; cards are content.</p>
+    <div class="phones">
+      <div>
+        <div class="phone"><div class="scroll" id="feed"><div class="scroll-edge"></div><h3>Listen Now</h3>
+          <div class="tile">Morning Mix</div><div class="tile">Focus Flow</div><div class="tile">Evening Calm</div><div class="tile">Road Trip</div><div class="tile">Deep Work</div><div class="tile">Weekend</div></div>
+          <div class="topbar"><button class="btn btn--glass btn--icon" data-glass="regular" data-interactive aria-label="Profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 5-5 8-5s6.5 1 8 5"/></svg></button><button class="btn btn--glass" data-glass="regular" data-interactive>Edit</button></div>
+          <nav class="tabbar" id="tabbar" data-glass="regular" aria-label="Sections" role="tablist">
+            <span class="tabbar__sel" id="tabsel"></span>
+            <button role="tab" aria-selected="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg><span>Listen</span></button>
+            <button role="tab" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Browse</span></button>
+            <button role="tab" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg><span>Search</span></button>
+          </nav>
+        </div>
+        <p class="caption note"><span class="badge do">Do</span> Content in solid cards, glass only on bars and buttons.</p>
+      </div>
+      <div>
+        <div class="phone"><div class="scroll"><h3>Settings</h3>
+          <div class="lg-bad" data-glass="regular" style="border-radius:22px;padding:6px 14px;margin-bottom:12px"><div class="row-item"><span>Wi-Fi</span><span class="note">Home</span></div><div class="row-item"><span>Bluetooth</span><span class="note">On</span></div><div class="row-item" style="border:0"><span>Battery</span><span class="note">82%</span></div></div>
+          <div data-glass="regular" style="border-radius:22px;padding:6px 14px;margin-bottom:12px"><div class="row-item"><span>Display</span></div><div class="row-item" style="border:0"><span>Sounds</span></div></div>
+          <div data-glass="regular" style="border-radius:22px;height:140px"></div></div></div>
+        <p class="caption note"><span class="badge dont">Don't</span> Glass list groups and cards: nothing to refract, hierarchy collapses, legibility drops.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>LiqUI by KSP. Code MIT, guidance CC BY 4.0. An independent community project, not made or endorsed by Apple. Apple, Liquid Glass and SF Pro are trademarks of Apple Inc.; SF fonts are not bundled. Guidance paraphrases <a href="https://developer.apple.com/design/human-interface-guidelines/">Apple's Human Interface Guidelines</a>.</p>
+  </footer>
+</main>
+
+<script type="module">
+import { glass, autoGlass, supportsRefraction, spring, liquidStretch } from "../kit/liqui-glass.js";
+
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+autoGlass();
+$("#engine").textContent = supportsRefraction() ? "Refraction: SVG lens (Chromium)" : "Frosted fallback (Safari / Firefox)";
+
+/* Segmented controls with a liquid glass thumb */
+function segmented(root, onChange) {
+  const thumb = $(".seg__thumb", root);
+  const btns = $$("button", root);
+  let x = 0, w = 0, cancel = () => {};
+  const place = (i, animate) => {
+    const b = btns[i], tx = b.offsetLeft, tw = b.offsetWidth;
+    btns.forEach((o, j) => o.setAttribute("aria-pressed", String(j === i)));
+    thumb.style.width = `${tw}px`;
+    if (!animate) { x = tx; thumb.style.transform = `translateX(${x}px)`; return; }
+    cancel();
+    cancel = spring(x, tx, (v, vel) => {
+      x = v;
+      const { sx, sy } = liquidStretch(vel);
+      thumb.style.transform = `translateX(${v}px) scale(${sx}, ${sy})`;
+    }, { response: 0.42, damping: 0.86 });
+  };
+  btns.forEach((b, i) => b.addEventListener("click", () => { place(i, true); onChange?.(b.dataset.v); }));
+  const init = () => place(Math.max(0, btns.findIndex((b) => b.getAttribute("aria-pressed") === "true")), false);
+  requestAnimationFrame(init);
+  addEventListener("resize", init);
+}
+segmented($("#theme"), (v) => { document.documentElement.dataset.theme = v; });
+segmented($("#period"), (v) => drawChart(v, true));
+
+/* Draggable hero lens: 1:1 tracking, release with velocity into a spring */
+(() => {
+  const lens = $("#lens"), hero = $("#hero");
+  let dragging = false, ox = 0, oy = 0, px = 0, py = 0, lx = 0, ly = 0, vx = 0, lastT = 0;
+  const set = (x, y, sx = 1, sy = 1) => { px = x; py = y; lens.style.transform = `translate(${x}px, ${y}px) scale(${sx}, ${sy})`; };
+  lens.addEventListener("pointerdown", (e) => { dragging = true; lens.setPointerCapture(e.pointerId); ox = e.clientX - px; oy = e.clientY - py; lx = e.clientX; lastT = e.timeStamp; });
+  lens.addEventListener("pointermove", (e) => {
+    if (!dragging) return;
+    const dt = Math.max(1, e.timeStamp - lastT); vx = ((e.clientX - lx) / dt) * 1000; lx = e.clientX; lastT = e.timeStamp;
+    const { sx, sy } = liquidStretch(vx);
+    set(e.clientX - ox, e.clientY - oy, sx, sy);
+  });
+  lens.addEventListener("pointerup", () => { dragging = false; const sx0 = 1 + Math.min(0.35, Math.abs(vx) * 0.0009); spring(sx0, 1, (s) => set(px, py, s, 2 - s), { response: 0.4, damping: 0.7 }); });
+  // Gentle idle drift so the refraction is visible before anyone touches it.
+  let t0 = performance.now();
+  const drift = (t) => { if (!dragging && !hero.dataset.touched) set(Math.sin((t - t0) / 1600) * 120, Math.cos((t - t0) / 2100) * 16); if (!hero.dataset.touched) requestAnimationFrame(drift); };
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) requestAnimationFrame(drift);
+  lens.addEventListener("pointerdown", () => { hero.dataset.touched = "1"; }, { once: true });
+})();
+
+/* Sliders whose thumb turns to glass while dragged */
+function slider(root, onInput) {
+  const set = (clientX) => {
+    const r = root.getBoundingClientRect();
+    const p = Math.max(0, Math.min(1, (clientX - r.left) / r.width));
+    root.style.setProperty("--p", `${p * 100}%`);
+    root.setAttribute("aria-valuenow", String(Math.round(p * 100)));
+    onInput?.(p);
+  };
+  root.setAttribute("role", "slider"); root.setAttribute("tabindex", "0");
+  root.setAttribute("aria-valuemin", "0"); root.setAttribute("aria-valuemax", "100");
+  root.addEventListener("pointerdown", (e) => { root.setPointerCapture(e.pointerId); root.classList.add("is-dragging"); set(e.clientX); });
+  root.addEventListener("pointermove", (e) => { if (root.classList.contains("is-dragging")) set(e.clientX); });
+  root.addEventListener("pointerup", () => root.classList.remove("is-dragging"));
+  root.addEventListener("keydown", (e) => {
+    const cur = parseFloat(getComputedStyle(root).getPropertyValue("--p")) || 0;
+    const step = e.key === "ArrowRight" ? 5 : e.key === "ArrowLeft" ? -5 : 0;
+    if (!step) return; e.preventDefault();
+    const p = Math.max(0, Math.min(100, cur + step)) / 100;
+    root.style.setProperty("--p", `${p * 100}%`); root.setAttribute("aria-valuenow", String(Math.round(p * 100))); onInput?.(p);
+  });
+}
+const clearPanel = $("#clearPanel");
+slider($("#dimSlider"), (p) => { clearPanel.__lg?.update({ dim: p }); $("#dimVal").textContent = `${Math.round(p * 100)}%`; });
+clearPanel.__lg?.update({ dim: 0.35 });
+slider($("#vol"));
+
+/* Toggle + favourite */
+$("#tg").addEventListener("click", (e) => { const b = e.currentTarget; b.setAttribute("aria-checked", String(b.getAttribute("aria-checked") !== "true")); });
+$("#fav").addEventListener("click", (e) => { const b = e.currentTarget; const on = b.getAttribute("aria-pressed") !== "true"; b.setAttribute("aria-pressed", String(on)); b.querySelector("path").setAttribute("fill", on ? "var(--pink)" : "none"); b.style.color = on ? "var(--pink)" : ""; });
+
+/* Chart with a scrubbing clear lens */
+const series = {};
+const seed = (n, s) => { let v = 100, out = []; for (let i = 0; i < n; i++) { s = (s * 9301 + 49297) % 233280; v += (s / 233280 - 0.46) * 6; out.push(v); } return out; };
+Object.assign(series, { "1D": seed(48, 3), "1W": seed(60, 7), "1M": seed(80, 11), "1Y": seed(120, 19) });
+let pts = [];
+function drawChart(period = "1W") {
+  const d = series[period], min = Math.min(...d), max = Math.max(...d);
+  pts = d.map((v, i) => [(i / (d.length - 1)) * 600, 200 - ((v - min) / (max - min)) * 170]);
+  const line = pts.map((p, i) => `${i ? "L" : "M"}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join("");
+  $("#linePath").setAttribute("d", line);
+  $("#areaPath").setAttribute("d", `${line}L600,220L0,220Z`);
+  const last = d[d.length - 1], first = d[0], pct = ((last - first) / first) * 100;
+  $("#chg").textContent = `${pct >= 0 ? "+" : ""}${pct.toFixed(1)}% this ${({ "1D": "day", "1W": "week", "1M": "month", "1Y": "year" })[period]}`;
+  $("#chg").style.color = pct >= 0 ? "var(--green)" : "var(--red)";
+}
+drawChart("1W");
+(() => {
+  const card = $("#chart"), svg = $("svg.chart", card), lens = $("#scrub"), label = $("#scrubLabel");
+  const fmt = new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 });
+  const move = (e) => {
+    const r = svg.getBoundingClientRect(), cr = card.getBoundingClientRect();
+    const fx = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+    const i = Math.round(fx * (pts.length - 1)), [px, py] = pts[i];
+    const x = r.left - cr.left + (px / 600) * r.width, y = r.top - cr.top + (py / 220) * r.height;
+    lens.style.transform = `translate(${x - 32}px, ${y - 32}px)`;
+    label.style.transform = `translate(${Math.min(cr.width - 120, Math.max(0, x - 50))}px, ${Math.max(0, y - 76)}px)`;
+    label.lastChild.textContent = fmt.format(458021 * (0.9 + (220 - py) / 1100));
+    card.classList.add("is-scrubbing");
+  };
+  svg.addEventListener("pointermove", move);
+  svg.addEventListener("pointerdown", move);
+  svg.addEventListener("pointerleave", () => card.classList.remove("is-scrubbing"));
+})();
+
+/* Tab bar: selection indicator + minimise on scroll */
+(() => {
+  const bar = $("#tabbar"), sel = $("#tabsel"), tabs = $$("button", bar), feed = $("#feed");
+  const place = () => { const b = tabs.find((t) => t.getAttribute("aria-selected") === "true"); sel.style.left = `${b.offsetLeft}px`; sel.style.width = `${b.offsetWidth}px`; };
+  tabs.forEach((t) => t.addEventListener("click", () => { tabs.forEach((o) => o.setAttribute("aria-selected", String(o === t))); place(); }));
+  requestAnimationFrame(place);
+  let last = 0;
+  feed.addEventListener("scroll", () => { const y = feed.scrollTop; bar.classList.toggle("is-min", y > 40 && y > last); last = y; }, { passive: true });
+})();
+</script>
+</body>
+</html>

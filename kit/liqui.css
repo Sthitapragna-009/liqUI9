@@ -1,0 +1,287 @@
+/*!
+ * LiqUI kit — MIT License, (c) 2026 KSP.
+ * Tokens follow the system colour values Apple publishes in the HIG (reference only; Apple
+ * notes they can change between releases). Not affiliated with Apple.
+ */
+
+/* ---------- Tokens ---------- */
+:root {
+  color-scheme: dark;
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", system-ui, sans-serif;
+  --font-rounded: ui-rounded, "SF Pro Rounded", -apple-system, system-ui, sans-serif;
+
+  /* System colours, dark appearance (HIG reference values) */
+  --red: rgb(255 66 69); --orange: rgb(255 146 48); --yellow: rgb(255 214 0);
+  --green: rgb(48 209 88); --mint: rgb(0 218 195); --teal: rgb(0 210 224);
+  --cyan: rgb(60 211 254); --blue: rgb(0 145 255); --indigo: rgb(109 124 255);
+  --purple: rgb(219 52 242); --pink: rgb(255 55 95); --brown: rgb(183 138 102);
+  --gray: rgb(142 142 147); --gray2: rgb(99 99 102); --gray3: rgb(72 72 74);
+  --gray4: rgb(58 58 60); --gray5: rgb(44 44 46); --gray6: rgb(28 28 30);
+
+  /* Semantic */
+  --accent: var(--blue);
+  --bg: #000;               /* system background, dark base */
+  --bg-2: rgb(28 28 30);    /* secondary */
+  --bg-3: rgb(44 44 46);    /* tertiary */
+  --bg-elevated: rgb(28 28 30);
+  --label: #fff;
+  --label-2: rgb(235 235 245 / 0.6);
+  --label-3: rgb(235 235 245 / 0.3);
+  --label-4: rgb(235 235 245 / 0.18);
+  --separator: rgb(84 84 88 / 0.6);
+  --fill: rgb(120 120 128 / 0.36);
+  --fill-2: rgb(120 120 128 / 0.32);
+  --fill-3: rgb(118 118 128 / 0.24);
+
+  /* Glass. Regular darkens a little in dark mode (luminosity adjustment) so white labels hold
+     contrast over bright content; Clear barely tints. */
+  --lg-tint-regular: rgb(22 22 26 / 0.34);
+  --lg-tint-clear: rgb(255 255 255 / 0.015);
+  --lg-tint-color: var(--accent);
+  --lg-label: #fff;
+  --lg-frost-fallback: 14px;
+  --lg-solid: rgb(44 44 46);          /* Reduce Transparency */
+  --lg-border-contrast: rgb(255 255 255 / 0.7); /* Increase Contrast */
+
+  /* Type: iOS Large (default) Dynamic Type, in rem at 16px root ≈ points */
+  --t-large-title: 2.125rem; --lh-large-title: 2.5625rem;
+  --t-title1: 1.75rem; --t-title2: 1.375rem; --t-title3: 1.25rem;
+  --t-headline: 1.0625rem; --t-body: 1.0625rem; --t-callout: 1rem;
+  --t-subhead: 0.9375rem; --t-footnote: 0.8125rem; --t-caption1: 0.75rem; --t-caption2: 0.6875rem;
+
+  /* Space and shape */
+  --space: 8px;
+  --radius-sm: 10px; --radius-md: 14px; --radius-lg: 22px; --radius-xl: 28px;
+  --target: 44px;
+  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);   /* release overshoot for press */
+  --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --red: rgb(255 56 60); --orange: rgb(255 141 40); --yellow: rgb(255 204 0);
+  --green: rgb(52 199 89); --mint: rgb(0 200 179); --teal: rgb(0 195 208);
+  --cyan: rgb(0 192 232); --blue: rgb(0 136 255); --indigo: rgb(97 85 245);
+  --purple: rgb(203 48 224); --pink: rgb(255 45 85); --brown: rgb(172 127 94);
+  --gray2: rgb(174 174 178); --gray3: rgb(199 199 204); --gray4: rgb(209 209 214);
+  --gray5: rgb(229 229 234); --gray6: rgb(242 242 247);
+  --bg: #fff; --bg-2: rgb(242 242 247); --bg-3: #fff; --bg-elevated: #fff;
+  --label: #000; --label-2: rgb(60 60 67 / 0.6); --label-3: rgb(60 60 67 / 0.3); --label-4: rgb(60 60 67 / 0.18);
+  --separator: rgb(60 60 67 / 0.29);
+  --fill: rgb(120 120 128 / 0.2); --fill-2: rgb(120 120 128 / 0.16); --fill-3: rgb(118 118 128 / 0.12);
+  --lg-tint-regular: rgb(250 250 252 / 0.5);
+  --lg-tint-clear: rgb(255 255 255 / 0.06);
+  --lg-label: #000;
+  --lg-solid: rgb(242 242 247);
+  --lg-border-contrast: rgb(0 0 0 / 0.6);
+}
+
+@media (prefers-contrast: more) {
+  :root { --label-2: rgb(235 235 245 / 0.8); --separator: rgb(255 255 255 / 0.5); }
+  :root[data-theme="light"] { --label-2: rgb(60 60 67 / 0.85); --separator: rgb(0 0 0 / 0.5); }
+}
+
+/* ---------- Glass layer stack ---------- */
+.lg {
+  position: relative;
+  color: var(--lg-label);
+  border-radius: var(--lg-radius, 999px);
+  /* No opacity, filter, mask or will-change on .lg or its ancestors: in Chromium any of them
+     silently disables the SVG refraction inside backdrop-filter (verified for will-change). */
+  transition: transform 420ms var(--spring);
+}
+.lg > :where(:not(.lg-layer):not(.lg-defs)) { position: relative; z-index: 2; }
+/* A whisper of shadow keeps labels readable over the brightest frame passing beneath. */
+.lg { text-shadow: 0 1px 2px rgb(0 0 0 / 0.28); }
+:root[data-theme="light"] .lg:not(.lg--tinted) { text-shadow: 0 1px 1px rgb(255 255 255 / 0.5); }
+.lg-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+.lg-layer { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; }
+
+.lg-shadow {
+  box-shadow: 0 8px 22px -6px rgb(0 0 0 / 0.5), 0 1px 2px rgb(0 0 0 / 0.35);
+  transition: box-shadow 300ms var(--ease);
+}
+.lg-backdrop { overflow: hidden; }
+.lg--frosted .lg-backdrop {
+  -webkit-backdrop-filter: blur(var(--lg-frost-fallback)) saturate(1.7) brightness(1.08);
+  backdrop-filter: blur(var(--lg-frost-fallback)) saturate(1.7) brightness(1.08);
+}
+.lg--frosted.lg--clear .lg-backdrop {
+  -webkit-backdrop-filter: blur(3px) saturate(1.5) brightness(1.1);
+  backdrop-filter: blur(3px) saturate(1.5) brightness(1.1);
+}
+.lg-dim { background: rgb(0 0 0 / calc(var(--lg-dim, 0) * 1)); }
+.lg-tint { background: var(--lg-tint-regular); }
+.lg--clear .lg-tint { background: var(--lg-tint-clear); }
+.lg--tinted .lg-tint { background: color-mix(in srgb, var(--lg-tint-color) 68%, transparent); }
+.lg--tinted { --lg-label: #fff; }
+/* Clear glass lives over media with a dimming layer, so its label stays light in both themes. */
+.lg--clear { --lg-label: #fff; }
+:root[data-theme="light"] .lg--clear { text-shadow: 0 1px 2px rgb(0 0 0 / 0.35); }
+.lg-edge {
+  box-shadow:
+    inset 0 0 10px rgb(0 0 0 / 0.2),
+    inset 0 0 28px rgb(255 255 255 / calc(0.05 * var(--lg-light, 1)));
+}
+.lg-caustic {
+  background: radial-gradient(70% 50% at 70% 112%, rgb(255 255 255 / calc(0.16 * var(--lg-light, 1))), transparent 70%);
+  mix-blend-mode: screen;
+}
+.lg-sheen {
+  background: radial-gradient(62% 55% at 42% -6%, rgb(255 255 255 / calc(0.2 * var(--lg-light, 1))), transparent 100%);
+  mix-blend-mode: screen;
+  opacity: 0.8;
+  transition: opacity 250ms var(--ease);
+}
+.lg-caustic { opacity: 0.85; transition: opacity 250ms var(--ease); }
+/* Specular rim: a ring brightest at the lit corner and its opposite, not a uniform border. */
+.lg-rim, .lg-rim-glow {
+  padding: 1.4px;
+  background: linear-gradient(var(--lg-angle, 135deg),
+    rgb(255 255 255 / calc(0.95 * var(--lg-light, 1))) 0%,
+    rgb(255 255 255 / calc(0.18 * var(--lg-light, 1))) 24%,
+    rgb(255 255 255 / 0.04) 50%,
+    rgb(255 255 255 / calc(0.14 * var(--lg-light, 1))) 76%,
+    rgb(255 255 255 / calc(0.7 * var(--lg-light, 1))) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+.lg-rim-glow { padding: 3px; filter: blur(2.5px); opacity: 0.7; }
+
+/* Press: squish and flare (iOS "interactive" glass). */
+.lg--interactive { cursor: pointer; touch-action: manipulation; }
+.lg--interactive.is-pressed { transform: scale(1.06, 0.95); transition-duration: 120ms; transition-timing-function: var(--ease); }
+.lg--interactive.is-pressed .lg-sheen,
+.lg--interactive.is-pressed .lg-caustic { opacity: 1; }
+.lg--interactive.is-pressed .lg-shadow { box-shadow: 0 14px 34px -8px rgb(0 0 0 / 0.55), 0 1px 2px rgb(0 0 0 / 0.35); }
+
+/* Light theme: shadows and edge read softer. */
+:root[data-theme="light"] .lg-shadow { box-shadow: 0 8px 24px -8px rgb(0 0 0 / 0.22), 0 1px 2px rgb(0 0 0 / 0.12); }
+:root[data-theme="light"] .lg-edge { box-shadow: inset 0 0 10px rgb(0 0 0 / 0.06), inset 0 0 24px rgb(255 255 255 / 0.25); }
+
+/* Accessibility settings */
+@media (prefers-reduced-transparency: reduce) {
+  .lg .lg-backdrop { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+  .lg .lg-tint { background: var(--lg-solid); }
+  .lg--tinted .lg-tint { background: var(--lg-tint-color); }
+  .lg .lg-caustic, .lg .lg-sheen, .lg .lg-rim-glow { display: none; }
+}
+@media (prefers-contrast: more) {
+  .lg .lg-tint { background: var(--lg-solid); }
+  .lg--tinted .lg-tint { background: var(--lg-tint-color); }
+  .lg .lg-rim { background: var(--lg-border-contrast); padding: 1.5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lg, .lg--interactive.is-pressed { transition: none; transform: none; }
+}
+
+/* ---------- Scroll edge effect ---------- */
+/* Place at the top (or bottom) of a scroll container that has floating glass over it. */
+.scroll-edge {
+  position: sticky; top: 0; height: 64px; margin-bottom: -64px; z-index: 5; pointer-events: none;
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  -webkit-mask: linear-gradient(#000 35%, transparent);
+  mask: linear-gradient(#000 35%, transparent);
+  background: linear-gradient(color-mix(in srgb, var(--bg) 55%, transparent), transparent);
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  --h: 36px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-height: var(--h); padding: 0 calc(var(--h) * 0.45);
+  font: 600 var(--t-subhead)/1 var(--font); letter-spacing: -0.01em;
+  border: 0; border-radius: 999px; background: none; color: var(--accent);
+  cursor: pointer; text-decoration: none; white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+}
+.btn::after { /* keep a 44pt hit region even for small buttons */
+  content: ""; position: absolute; inset: min(0px, calc((var(--h) - var(--target)) / 2)); border-radius: inherit;
+}
+.btn--sm { --h: 28px; font-size: var(--t-footnote); }
+.btn--lg { --h: 50px; font-size: var(--t-body); }
+.btn--glass { color: var(--lg-label); }
+.btn--tinted { color: #fff; }
+.btn--gray { background: var(--fill); color: var(--accent); transition: transform 300ms var(--spring), background 150ms; }
+.btn--gray:active { transform: scale(0.97); background: var(--fill-2); transition-duration: 90ms; }
+.btn--plain { padding: 0 6px; }
+.btn--plain:active { opacity: 0.55; }
+.btn--icon { padding: 0; width: var(--h); }
+.btn--destructive { color: var(--red); }
+.btn--tinted.btn--destructive { --lg-tint-color: var(--red); color: #fff; }
+.btn:disabled, .btn[aria-disabled="true"] { color: var(--label-3); pointer-events: none; }
+.btn:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 70%, transparent); outline-offset: 3px; }
+.btn svg { width: 1.15em; height: 1.15em; flex: none; }
+
+/* ---------- Segmented control ---------- */
+/* Track is a content-layer fill; only the moving thumb is glass (avoid glass on glass). */
+.seg {
+  position: relative; display: inline-grid; grid-auto-flow: column; grid-auto-columns: 1fr;
+  padding: 3px; border-radius: 999px; background: var(--fill-3);
+  font: 600 var(--t-footnote)/1 var(--font);
+}
+.seg button {
+  position: relative; z-index: 3; min-height: 30px; min-width: 56px; padding: 0 14px;
+  border: 0; border-radius: 999px; background: none; color: var(--label-2); font: inherit; cursor: pointer;
+}
+.seg button[aria-pressed="true"] { color: var(--label); }
+/* The thumb sits above the labels so its lens magnifies the label it passes over. JS drives
+   its transform with a spring, so no CSS transform transition here. */
+.seg__thumb { position: absolute; top: 3px; bottom: 3px; left: 0; z-index: 4; border-radius: 999px; transform-origin: center; pointer-events: none; transition: none; }
+
+/* ---------- Slider ---------- */
+.slider { position: relative; height: 32px; display: flex; align-items: center; touch-action: none; cursor: pointer; }
+.slider__track { position: absolute; left: 0; right: 0; height: 6px; border-radius: 3px; background: var(--fill); overflow: hidden; }
+.slider__fill { height: 100%; width: var(--p, 50%); background: var(--accent); }
+/* The thumb is glass underneath a solid cap; the cap fades while dragging so the thumb
+   "turns to glass" only during interaction, as HIG describes for content-layer sliders. */
+.slider__thumb {
+  position: absolute; left: var(--p, 50%); width: 30px; height: 22px; margin-left: -15px; border-radius: 999px;
+  transition: width 380ms var(--spring), height 380ms var(--spring), margin 380ms var(--spring);
+}
+.slider__thumb .slider__cap {
+  position: absolute; inset: 0; z-index: 4; border-radius: inherit; background: #fff;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.3); transition: opacity 180ms var(--ease);
+}
+.slider.is-dragging .slider__thumb { width: 52px; height: 34px; margin-left: -26px; }
+.slider.is-dragging .slider__cap { opacity: 0; }
+@media (prefers-reduced-transparency: reduce) { .slider.is-dragging .slider__cap { opacity: 1; } }
+
+/* ---------- Toggle ---------- */
+.toggle { position: relative; width: 52px; height: 32px; border-radius: 999px; background: var(--fill); border: 0; cursor: pointer; transition: background 200ms; }
+.toggle[aria-checked="true"] { background: var(--green); }
+.toggle__knob { position: absolute; top: 3px; left: 3px; width: 26px; height: 26px; border-radius: 999px; background: #fff; box-shadow: 0 2px 6px rgb(0 0 0 / 0.25); transition: transform 350ms var(--spring), width 250ms var(--spring); }
+.toggle[aria-checked="true"] .toggle__knob { transform: translateX(20px); }
+.toggle:active .toggle__knob { width: 32px; }
+.toggle[aria-checked="true"]:active .toggle__knob { transform: translateX(14px); }
+
+/* ---------- Bars ---------- */
+.tabbar {
+  display: flex; gap: 2px; padding: 6px; border-radius: 999px;
+  --lg-radius: 999px;
+}
+.tabbar button {
+  position: relative; z-index: 3; display: grid; justify-items: center; gap: 2px;
+  min-width: 64px; min-height: 48px; padding: 6px 10px; border: 0; border-radius: 999px;
+  background: none; color: var(--lg-label); font: 600 10px/1 var(--font); cursor: pointer; opacity: 0.85;
+}
+.tabbar button[aria-selected="true"] { color: var(--accent); opacity: 1; }
+.tabbar svg { width: 24px; height: 24px; }
+.tabbar__sel { position: absolute; z-index: 2; top: 6px; bottom: 6px; border-radius: 999px; background: var(--fill-3); transition: left 450ms var(--spring), width 450ms var(--spring); }
+
+.toolbar { display: flex; align-items: center; gap: 12px; }
+.toolbar__group { display: flex; align-items: center; gap: 2px; padding: 4px; border-radius: 999px; --lg-radius: 999px; }
+.toolbar__group .btn { color: var(--lg-label); }
+
+/* ---------- Content-layer surfaces (never glass) ---------- */
+.card { background: var(--bg-2); border-radius: var(--radius-lg); padding: 16px; }
+.card--material { /* standard material: frosted, no refraction or specular rim */
+  background: color-mix(in srgb, var(--bg-2) 62%, transparent);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4); backdrop-filter: blur(24px) saturate(1.4);
+}
+@media (prefers-reduced-transparency: reduce) { .card--material { background: var(--bg-2); backdrop-filter: none; -webkit-backdrop-filter: none; } }
+
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
